@@ -1,0 +1,64 @@
+﻿<Page x:Class="BetterGenshinImpact.View.Pages.HotKeyPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:controls="clr-namespace:BetterGenshinImpact.View.Controls"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:hotKey="clr-namespace:BetterGenshinImpact.View.Controls.HotKey"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:model="clr-namespace:BetterGenshinImpact.Model"
+      xmlns:pages="clr-namespace:BetterGenshinImpact.ViewModel.Pages"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      Title="HotkeyPage"
+      d:DataContext="{d:DesignInstance Type=pages:HotKeyPageViewModel}"
+      d:DesignHeight="850"
+      d:DesignWidth="600"
+      ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+      ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+      FontFamily="{StaticResource TextThemeFontFamily}"
+      Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+      mc:Ignorable="d">
+
+    <Grid Margin="42,16,42,12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ui:TextBlock Grid.Row="0"
+                      Margin="0,0,0,8"
+                      FontTypography="BodyStrong"
+                      Text="Настройка клавиш быстрого доступа" />
+        <ui:TextBlock Grid.Row="1"
+                      Margin="0,0,0,8"
+                      Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
+                      Text="Глобальные горячие клавиши: поддерживаются только комбинации клавиш и функциональные клавиши, функция вступает в силу непосредственно при запуске программного обеспечения. Прослушивание клавиатуры и мыши: поддерживается любая отдельная клавиша клавиатуры и боковая кнопка мыши, функция вступает в силу только после запуска программы (рекомендуется). Нажмите кнопку типа, чтобы переключить тип клавиши быстрого доступа. Функции, требующие длительного нажатия, не могут использовать глобальные горячие клавиши."
+                      TextWrapping="Wrap" />
+        <ItemsControl Grid.Row="2" ItemsSource="{Binding HotKeySettingModels}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type model:HotKeySettingModel}">
+                    <Grid Margin="0,8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="180" />
+                        </Grid.ColumnDefinitions>
+                        <ui:TextBlock Grid.Column="0"
+                                      VerticalAlignment="Center"
+                                      Text="{Binding FunctionName}" />
+                        <ui:Button Grid.Column="1"
+                                   Margin="0,0,8,0"
+                                   HorizontalAlignment="Right"
+                                   Command="{Binding SwitchHotKeyTypeCommand}"
+                                   Content="{Binding HotKeyTypeName, Mode=OneWay}"
+                                   IsEnabled="{Binding SwitchHotkeyTypeEnabled, Mode=OneWay}" />
+                        <hotKey:HotKeyTextBox Grid.Column="2"
+                                              HotKeyTypeName="{Binding HotKeyTypeName, Mode=OneWay}"
+                                              Hotkey="{Binding HotKey}"
+                                              Style="{StaticResource DefaultTextBoxStyle}"
+                                              TextAlignment="Center" />
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</Page>
